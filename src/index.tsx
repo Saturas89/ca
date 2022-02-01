@@ -7,7 +7,7 @@ import { SourceCodeLink } from './components/SourceCodeLink';
 import { ShoesViewer } from './components/ShoesViewer';
 import { Header } from './components/Header';
 import { WalletConnect } from './components/WalletConnect';
-import { MintContract } from './components/MintContract';
+import { mintContract } from './components/MintContract';
 import { Nft } from './components/Nft';
 import {BuilderComponent, withChildren} from '@builder.io/react';
 import {Auth0Provider} from "@auth0/auth0-react";
@@ -41,7 +41,7 @@ Builder.registerComponent(EthAddress, {
   name: "EthAddress",
 });
 
-Builder.registerComponent(MintContract, {
+Builder.registerComponent(mintContract, {
   name: "MintContract",
 });
 

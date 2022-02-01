@@ -2,12 +2,13 @@ import './App.css';
 import {BuilderComponent} from '@builder.io/react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {WalletConnect} from "./components/WalletConnect";
 
 function App() {
 
- //   const [currentAccount, setCurrentAccount] = useState("");
+ /*   const [currentAccount, setCurrentAccount] = useState("");
 
-    const connectWallet = async () => {
+    async function connectWallet() {
         try {
             // @ts-ignore
             const {ethereum} = window;
@@ -19,15 +20,15 @@ function App() {
             const accounts = await ethereum.request({method: "eth_requestAccounts"});
 
             console.log("Connected", accounts[0]);
-       //     setCurrentAccount(accounts[0])
-
+     //       setCurrentAccount(accounts[0])
+            console.log("currentAcc", currentAccount)
             // Setup listener! This is for the case where a user comes to our site
             // and connected their wallet for the first time.
             //     setupEventListener()
         } catch (error) {
             console.log(error)
         }
-    }
+    } */
 
     // @ts-ignore
     return (
@@ -35,7 +36,7 @@ function App() {
             <header>
                 <Navbar bg="light" variant="light">
                     <Container>
-                        <Navbar.Brand href="/nftt">
+                        <Navbar.Brand href="/">
                                 <img
                                   //  src="/ca-logo.png"
                                   //  src={require('/ca-logo.png')}
@@ -47,16 +48,12 @@ function App() {
                                 />
                            Cryptoacademy</Navbar.Brand>
                         <Nav>
-                            <Nav.Link href="/nftt">NFT</Nav.Link>
+                            <Nav.Link href="/">NFT</Nav.Link>
                             <Nav.Link href="/token">Token</Nav.Link>
                             <Nav.Link href="/member">Member</Nav.Link>
                             <Nav.Link href="/nft">About us</Nav.Link>
                         </Nav>
-                        <form>
-                            <button className="btn btn-success" type="submit" onClick={() => connectWallet()}>Connect
-                                Wallet
-                            </button>
-                        </form>
+                        <WalletConnect/>
                     </Container>
                 </Navbar>
             </header>

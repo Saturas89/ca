@@ -6,9 +6,9 @@ import SendIcon from "@mui/icons-material/Send";
 import {pinJSONToIPFS} from '../pinata'
 import {TextField} from "@mui/material";
 
-export function mintContract(tokenURI: String) {
-    const CONTRACT_ADDRESS = "0xf7734122eADa7a13dE4d35aEb4d6376010eB8958";
-    const askContractToMintNft = async () => {
+export function mintContract() {
+ //   const CONTRACT_ADDRESS = "0xf7734122eADa7a13dE4d35aEb4d6376010eB8958";
+  /*  const askContractToMintNft = async () => {
         try {
             // @ts-ignore
             const {ethereum} = window;
@@ -34,7 +34,7 @@ export function mintContract(tokenURI: String) {
         } catch (error) {
             console.log(error)
         }
-    }
+    } */
 
 
     //    <input id="recipient" placeholder="0xDe91...." type="text"/>
@@ -97,7 +97,6 @@ export const mintNFT = async () => {
     }
 
     const tokenURI = pinataResponse.pinataUrl;
-    mintContract(tokenURI)
 
     const CONTRACT_ADDRESS = "0xf7734122eADa7a13dE4d35aEb4d6376010eB8958";
         try {

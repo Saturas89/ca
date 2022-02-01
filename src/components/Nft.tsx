@@ -1,4 +1,3 @@
-import {BuilderComponent} from "@builder.io/react";
 import React from "react";
 
 export interface NFTProps {

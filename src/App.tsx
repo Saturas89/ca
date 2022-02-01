@@ -2,11 +2,10 @@ import './App.css';
 import {BuilderComponent} from '@builder.io/react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {useState} from "react";
 
 function App() {
 
-    const [currentAccount, setCurrentAccount] = useState("");
+ //   const [currentAccount, setCurrentAccount] = useState("");
 
     const connectWallet = async () => {
         try {
@@ -20,7 +19,7 @@ function App() {
             const accounts = await ethereum.request({method: "eth_requestAccounts"});
 
             console.log("Connected", accounts[0]);
-            setCurrentAccount(accounts[0]);
+       //     setCurrentAccount(accounts[0])
 
             // Setup listener! This is for the case where a user comes to our site
             // and connected their wallet for the first time.
@@ -38,7 +37,9 @@ function App() {
                     <Container>
                         <Navbar.Brand href="/nftt">
                                 <img
-                                    src="/ca-logo.png"
+                                  //  src="/ca-logo.png"
+                                  //  src={require('/ca-logo.png')}
+                                    src={`${process.env.PUBLIC_URL}/ca-logo.png`}
                                     width="30"
                                     height="30"
                                     className="d-inline-block align-top"

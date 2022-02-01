@@ -3,13 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { builder, Builder } from '@builder.io/sdk';
-import { SourceCodeLink } from './components/SourceCodeLink';
 import { ShoesViewer } from './components/ShoesViewer';
 import { Header } from './components/Header';
-import { WalletConnect } from './components/WalletConnect';
 import { mintContract } from './components/MintContract';
 import { Nft } from './components/Nft';
-import {BuilderComponent, withChildren} from '@builder.io/react';
 import {Auth0Provider} from "@auth0/auth0-react";
 import {EthAddress} from "./components/EthAddress";
 import {LinkToAsset} from "./components/LinkToAsset";
@@ -27,14 +24,6 @@ ReactDOM.render(
     </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')
-);
-
-export default () => (
-    <BuilderComponent
-        context={{
-          myFunction: () => alert('Hi!')
-        }}
-    />
 );
 
 Builder.registerComponent(EthAddress, {
@@ -88,33 +77,6 @@ Builder.registerComponent(ShoesViewer, {
       type: 'number',
       friendlyName: 'Ambient light intensity',
       defaultValue: 0.5,
-    }
-  ]
-});
-
-
-Builder.registerComponent(withChildren(SourceCodeLink), {
-  name: "SourceCodeLink",
-  inputs: [
-    {
-      name: 'fileName',
-      type: 'string',
-      required: true,
-    },
-    {
-      name: 'line',
-      type: 'number',
-    },
-    {
-      name: 'column',
-      type: 'number',
-    },
-  ],
-  canHaveChildren: true,
-  defaultChildren: [
-    {
-      '@type': '@builder.io/sdk:Element',
-      component: { name: 'Text', options: { text: 'Open source code' } }
     }
   ]
 });

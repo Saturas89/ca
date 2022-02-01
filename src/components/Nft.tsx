@@ -8,10 +8,8 @@ export interface NFTProps {
 export function Nft() {
     return (
         <>
-        <input id="recipient2" placeholder="0xDe91...." type="text"/>
-
-            </>
-
+            <input id="recipient2" placeholder="0xDe91...." type="text"/>
+        </>
     );
 }
 

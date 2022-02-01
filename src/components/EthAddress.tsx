@@ -10,5 +10,3 @@ export function EthAddress() {
         />
     </>
 }
-
-//       <input id="recipient" placeholder="0xDe91...." type="text"/>

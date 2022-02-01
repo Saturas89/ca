@@ -7,34 +7,34 @@ import {pinJSONToIPFS} from '../pinata'
 import {TextField} from "@mui/material";
 
 export function mintContract() {
- //   const CONTRACT_ADDRESS = "0xf7734122eADa7a13dE4d35aEb4d6376010eB8958";
-  /*  const askContractToMintNft = async () => {
-        try {
-            // @ts-ignore
-            const {ethereum} = window;
+    //   const CONTRACT_ADDRESS = "0xf7734122eADa7a13dE4d35aEb4d6376010eB8958";
+    /*  const askContractToMintNft = async () => {
+          try {
+              // @ts-ignore
+              const {ethereum} = window;
 
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
-                console.log("tokenuri " + tokenURI)
-                const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, memberNFT.abi, signer);
-                // "https://gateway.pinata.cloud/ipfs/QmYaSb6mSrnoC1x7xP5xCmkmBDZ2gJ7kcbYqkuhF2Dgh2J"
-                console.log("Going to pop wallet now to pay gas...")
-                // @ts-ignore
-                let nftTxn = await connectedContract.mintNFT(document.getElementById('recipient').value, tokenURI);
+              if (ethereum) {
+                  const provider = new ethers.providers.Web3Provider(ethereum);
+                  const signer = provider.getSigner();
+                  console.log("tokenuri " + tokenURI)
+                  const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, memberNFT.abi, signer);
+                  // "https://gateway.pinata.cloud/ipfs/QmYaSb6mSrnoC1x7xP5xCmkmBDZ2gJ7kcbYqkuhF2Dgh2J"
+                  console.log("Going to pop wallet now to pay gas...")
+                  // @ts-ignore
+                  let nftTxn = await connectedContract.mintNFT(document.getElementById('recipient').value, tokenURI);
 
-                console.log("Mining...please wait.")
-                await nftTxn.wait();
+                  console.log("Mining...please wait.")
+                  await nftTxn.wait();
 
-                console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+                  console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
 
-            } else {
-                console.log("Ethereum object doesn't exist!");
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    } */
+              } else {
+                  console.log("Ethereum object doesn't exist!");
+              }
+          } catch (error) {
+              console.log(error)
+          }
+      } */
 
 
     //    <input id="recipient" placeholder="0xDe91...." type="text"/>
@@ -46,13 +46,13 @@ export function mintContract() {
             label="NFT Name"
             placeholder="e.g. Cryptoacademy 2018"
         />
-        <br />
+        <br/>
         <TextField
             id="nft-asset-link"
             label="Link to picture/asset"
             placeholder="e.g. https://gateway.pinata.cloud/ipfs/QmYhrjZXbJQSYJ8VcFDLBPVNUd5AcNRh2khcL6TXRtmd1R?preview=1"
         />
-        <br />
+        <br/>
         <TextField
             id="nft-description"
             label="NFT Description"
@@ -99,33 +99,33 @@ export const mintNFT = async () => {
     const tokenURI = pinataResponse.pinataUrl;
 
     const CONTRACT_ADDRESS = "0xf7734122eADa7a13dE4d35aEb4d6376010eB8958";
-        try {
+    try {
+        // @ts-ignore
+        const {ethereum} = window;
+
+        if (ethereum) {
+            const provider = new ethers.providers.Web3Provider(ethereum);
+            const signer = provider.getSigner();
+            console.log("tokenuri " + tokenURI)
+            const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, memberNFT.abi, signer);
+            // "https://gateway.pinata.cloud/ipfs/QmYaSb6mSrnoC1x7xP5xCmkmBDZ2gJ7kcbYqkuhF2Dgh2J"
+            console.log("Going to pop wallet now to pay gas...")
             // @ts-ignore
-            const {ethereum} = window;
+            let nftTxn = await connectedContract.mintNFT(document.getElementById('recipient').value, tokenURI);
 
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
-                console.log("tokenuri " + tokenURI)
-                const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, memberNFT.abi, signer);
-                // "https://gateway.pinata.cloud/ipfs/QmYaSb6mSrnoC1x7xP5xCmkmBDZ2gJ7kcbYqkuhF2Dgh2J"
-                console.log("Going to pop wallet now to pay gas...")
-                // @ts-ignore
-                let nftTxn = await connectedContract.mintNFT(document.getElementById('recipient').value, tokenURI);
+            console.log("Mining...please wait.")
+            await nftTxn.wait();
 
-                console.log("Mining...please wait.")
-                await nftTxn.wait();
+            console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
 
-                console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
-
-            } else {
-                console.log("Ethereum object doesn't exist!");
-            }
-        } catch (error) {
-            console.log(error)
+        } else {
+            console.log("Ethereum object doesn't exist!");
         }
-
+    } catch (error) {
+        console.log(error)
     }
+
+}
 
 
 

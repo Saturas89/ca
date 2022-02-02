@@ -1,45 +1,75 @@
 import React from "react";
 import {ethers} from "ethers";
 import memberNFT from '../utils/MemberNFT.json';
-import Button from "@mui/material/Button";
+import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from "@mui/icons-material/Send";
 import {pinJSONToIPFS} from '../pinata'
 import {TextField} from "@mui/material";
 
-export function mintContract() {
-    //   const CONTRACT_ADDRESS = "0xf7734122eADa7a13dE4d35aEb4d6376010eB8958";
-    /*  const askContractToMintNft = async () => {
-          try {
-              // @ts-ignore
-              const {ethereum} = window;
 
-              if (ethereum) {
-                  const provider = new ethers.providers.Web3Provider(ethereum);
-                  const signer = provider.getSigner();
-                  console.log("tokenuri " + tokenURI)
-                  const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, memberNFT.abi, signer);
-                  // "https://gateway.pinata.cloud/ipfs/QmYaSb6mSrnoC1x7xP5xCmkmBDZ2gJ7kcbYqkuhF2Dgh2J"
-                  console.log("Going to pop wallet now to pay gas...")
-                  // @ts-ignore
-                  let nftTxn = await connectedContract.mintNFT(document.getElementById('recipient').value, tokenURI);
+export function MintContract() {
 
-                  console.log("Mining...please wait.")
-                  await nftTxn.wait();
+    const [loading, setLoading] = React.useState(false);
 
-                  console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+    // @ts-ignore
+    const mintNFT = async () => {
+        setLoading(true)
+        //make metadata
+        const metadata = new Metadata();
+        metadata.name = (document.getElementById("nft-name") as HTMLInputElement).value.trim();
+        metadata.image = (document.getElementById("nft-asset-link") as HTMLInputElement).value.trim();
+        metadata.description = (document.getElementById("nft-description") as HTMLInputElement).value.trim();
 
-              } else {
-                  console.log("Ethereum object doesn't exist!");
-              }
-          } catch (error) {
-              console.log(error)
-          }
-      } */
+        //error handling
+        if (metadata.name === "" || (metadata.image === "" || metadata.description === "")) {
+            alert("❗Please make sure all fields are completed before minting.")
+            return {
+                success: false,
+                status: "❗Please make sure all fields are completed before minting.",
+            }
+        }
 
+        //make pinata call
+        const pinataResponse = await pinJSONToIPFS(metadata);
+        if (!pinataResponse.success) {
+            return {
+                success: false,
+                status: "😢 Something went wrong while uploading your tokenURI.",
+            }
+        }
 
-    //    <input id="recipient" placeholder="0xDe91...." type="text"/>
-    //      <input type="submit" onClick={askContractToMintNft} value="send"
-    //            className="cta-button connect-wallet-button"/>
+        const tokenURI = pinataResponse.pinataUrl;
+
+        const CONTRACT_ADDRESS = "0xf7734122eADa7a13dE4d35aEb4d6376010eB8958";
+        try {
+            // @ts-ignore
+            const {ethereum} = window;
+
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
+                const signer = provider.getSigner();
+                console.log("tokenuri " + tokenURI)
+                const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, memberNFT.abi, signer);
+                // "https://gateway.pinata.cloud/ipfs/QmYaSb6mSrnoC1x7xP5xCmkmBDZ2gJ7kcbYqkuhF2Dgh2J"
+                console.log("Going to pop wallet now to pay gas...")
+                // @ts-ignore
+                let nftTxn = await connectedContract.mintNFT(document.getElementById('recipient').value, tokenURI);
+                console.log("Mining...please wait.")
+                alert("Mining...please wait.")
+                await nftTxn.wait();
+                alert(`Successfully https://rinkeby.etherscan.io/tx/${nftTxn.hash}`)
+                console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+                setLoading(false)
+            } else {
+                console.log("Ethereum object doesn't exist!");
+                setLoading(false)
+            }
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
+
+    }
     return <>
         <TextField
             id="nft-name"
@@ -58,10 +88,10 @@ export function mintContract() {
             label="NFT Description"
             placeholder="e.g. Even cooler than cryptokitties or bored ape yacht club ;)"
         />
-        <Button variant="contained" onClick={() => mintNFT()} endIcon={<SendIcon/>}>send</Button>
+        <LoadingButton variant="contained" onClick={() => mintNFT()} endIcon={<SendIcon/>} loading={loading}
+                       loadingPosition="end">send</LoadingButton>
     </>
 }
-
 
 class Metadata {
     name: string | undefined;
@@ -70,62 +100,6 @@ class Metadata {
 }
 
 
-// @ts-ignore
-export const mintNFT = async () => {
-
-    //make metadata
-    const metadata = new Metadata();
-    metadata.name = (document.getElementById("nft-name") as HTMLInputElement).value.trim();
-    metadata.image = (document.getElementById("nft-asset-link") as HTMLInputElement).value.trim();
-    metadata.description = (document.getElementById("nft-description") as HTMLInputElement).value.trim();
-
-    //error handling
-    if (metadata.name === "" || (metadata.image === "" || metadata.description === "")) {
-        return {
-            success: false,
-            status: "❗Please make sure all fields are completed before minting.",
-        }
-    }
-
-    //make pinata call
-    const pinataResponse = await pinJSONToIPFS(metadata);
-    if (!pinataResponse.success) {
-        return {
-            success: false,
-            status: "😢 Something went wrong while uploading your tokenURI.",
-        }
-    }
-
-    const tokenURI = pinataResponse.pinataUrl;
-
-    const CONTRACT_ADDRESS = "0xf7734122eADa7a13dE4d35aEb4d6376010eB8958";
-    try {
-        // @ts-ignore
-        const {ethereum} = window;
-
-        if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum);
-            const signer = provider.getSigner();
-            console.log("tokenuri " + tokenURI)
-            const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, memberNFT.abi, signer);
-            // "https://gateway.pinata.cloud/ipfs/QmYaSb6mSrnoC1x7xP5xCmkmBDZ2gJ7kcbYqkuhF2Dgh2J"
-            console.log("Going to pop wallet now to pay gas...")
-            // @ts-ignore
-            let nftTxn = await connectedContract.mintNFT(document.getElementById('recipient').value, tokenURI);
-
-            console.log("Mining...please wait.")
-            await nftTxn.wait();
-
-            console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
-
-        } else {
-            console.log("Ethereum object doesn't exist!");
-        }
-    } catch (error) {
-        console.log(error)
-    }
-
-}
 
 
 

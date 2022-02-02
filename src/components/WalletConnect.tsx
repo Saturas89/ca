@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "@mui/material";
 
 
@@ -52,46 +52,19 @@ export function WalletConnect() {
         }
     }
 
-/*    const renderNotConnectedContainer = () => (
-        <Button variant="outlined" className="btn btn-success" type="submit" onClick={connectWallet}>Connect
-            Wallet
-        </Button>
-    ); */
-
     useEffect(() => {
-         checkIfWalletIsConnected().then(r => console.log("checkIfWallet"));
+        // @ts-ignore
+        checkIfWalletIsConnected().then(r => console.log("checkIfWallet"));
     }, [currentAccount])
 
     return <>
         {!currentAccount ? (
-                <Button variant="outlined" className="btn btn-success" type="submit" onClick={connectWallet}>Connect
+                <Button variant="outlined" type="submit" onClick={connectWallet}>Connect
                     Wallet
                 </Button>
             ) :
-            (<Button variant="outlined" className="btn btn-success" type="submit">Connected
+            (<Button variant="outlined" disabled>Connected
             </Button>)
         }
     </>
 }
-        /* export async function ConnectWallet() {
-        const [currentAccount, setCurrentAccount] = useState("");
-        try {
-        // @ts-ignore
-        const {ethereum} = window;
-
-        if (!ethereum) {
-        alert("Get MetaMask!");
-        return;
-    }
-        const accounts = await ethereum.request({method: "eth_requestAccounts"});
-
-        console.log("Connected", accounts[0]);
-        setCurrentAccount(accounts[0]);
-
-        // Setup listener! This is for the case where a user comes to our site
-        // and connected their wallet for the first time.
-        //     setupEventListener()
-    } catch (error) {
-        console.log(error)
-    }
-    } */

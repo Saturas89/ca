@@ -5,11 +5,12 @@ import App from './App';
 import { builder, Builder } from '@builder.io/sdk';
 import { ShoesViewer } from './components/ShoesViewer';
 import { Header } from './components/Header';
-import { mintContract } from './components/MintContract';
+import { MintContract } from './components/MintContract';
 import { Nft } from './components/Nft';
 import {Auth0Provider} from "@auth0/auth0-react";
 import {EthAddress} from "./components/EthAddress";
 import {LinkToAsset} from "./components/LinkToAsset";
+import {OpenSea} from "./components/OpenSea";
 
 builder.init("caf72d82937b47ce891866e56a3aec0f");
 
@@ -30,7 +31,7 @@ Builder.registerComponent(EthAddress, {
   name: "EthAddress",
 });
 
-Builder.registerComponent(mintContract, {
+Builder.registerComponent(MintContract, {
   name: "MintContract",
 });
 
@@ -40,6 +41,10 @@ Builder.registerComponent(mintContract, {
 
 Builder.registerComponent(LinkToAsset, {
   name: "LinkToAsset",
+});
+
+Builder.registerComponent(OpenSea, {
+  name: "OpenSea",
 });
 
 
